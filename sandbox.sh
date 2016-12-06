@@ -22,7 +22,7 @@
 
 _sandbox() {
   # arguments not found
-  [ "$#" -eq 0 ] && _sandbox_usage && return 1
+  [ "$#" -eq 0 ] && _sandbox_usage && return 64
 
   # sub commands
   case "$1" in
@@ -73,7 +73,7 @@ _sandbox_list() {
     sed_script="s|^|${sandbox_dir}/|"
   elif [ x"$1" != 'x' ]
   then
-    $printf -- 'unknown argument: %s\n' "$1" >&2 && return 1
+    $printf -- 'unknown argument: %s\n' "$1" >&2 && return 67
   fi
 
   $ls -1p "$sandbox_dir" | $grep '/$' | $sed -e 's|/$||' -e "$sed_script"
