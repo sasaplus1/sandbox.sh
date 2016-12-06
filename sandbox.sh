@@ -68,10 +68,10 @@ _sandbox_list() {
 
   local sed_script=
 
-  if [ "$1" = '-p' ]
+  if [ x"$1" = 'x-p' ]
   then
     sed_script="s|^|${sandbox_dir}/|"
-  elif [ "$1" != '' ]
+  elif [ x"$1" != 'x' ]
   then
     $printf -- 'unknown argument: %s' "$1" && return 1
   fi
