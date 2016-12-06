@@ -36,6 +36,11 @@ _sandbox() {
       shift
       _sandbox_list $*
       ;;
+    # remove sandbox
+    rm | remove)
+      shift
+      _sandbox_remove $*
+      ;;
     # unknown
     *)
       _sandbox_usage
@@ -79,11 +84,36 @@ _sandbox_list() {
   $ls -1p "$sandbox_dir" | $grep '/$' | $sed -e 's|/$||' -e "$sed_script"
 }
 
+_sandbox_remove() {
+  local printf=$(type -tP printf)
+  local rm=$(type -tP rm)
+
+  local sandbox_dir=${_SANDBOX_DIR:-$HOME/.sandbox}
+  local target_dir="$sandbox_dir/$1"
+
+  if [ x"$1" = "x" ]
+  then
+    $printf -- 'sandbox name required\n' >&2 && return 65
+  elif [ ! -d "$target_dir" ]
+  then
+    $printf -- '%s is not found\n' "$1" >&2 && return 66
+  fi
+
+  $rm -rf "$target_dir"
+}
+
 _sandbox_usage() {
   # CAUTION: do not delete tabs
   cat <<-USAGE >&2
 	Usage:
+	
 	  sandbox [command] [args...]
+	
+	Commands:
+	
+	  c  | create  create sandbox directory
+	  ls | list    show sandbox directories
+	  rm | remove  remove sandbox directory
 	USAGE
 }
 
