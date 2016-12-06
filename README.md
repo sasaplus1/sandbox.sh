@@ -4,7 +4,7 @@ manage sandbox directory
 
 ## Installation
 
-append to your `.bashrc` or `.bash_profile` the following:
+add to your `.bashrc` or `.bash_profile` the following:
 
 ```sh
 . /path/to/sandbox.sh
@@ -12,7 +12,7 @@ append to your `.bashrc` or `.bash_profile` the following:
 
 ## Usage
 
-### create|c
+### c | create
 
 ```sh
 $ sandbox create [sandbox name]
@@ -20,13 +20,29 @@ $ sandbox create [sandbox name]
 
 create sandbox directory, and show created sandbox's path.
 
-### list|ls
+### cd
+
+```sh
+$ sandbox cd [sandbox name]
+```
+
+move to sandbox directory.
+
+### ls | list
 
 ```sh
 $ sandbox list [-p]
 ```
 
 show sandboxes list.
+
+### rm | remove
+
+```sh
+$ sandbox remove [sandbox name]
+```
+
+remove sandbox directory.
 
 ## License
 
