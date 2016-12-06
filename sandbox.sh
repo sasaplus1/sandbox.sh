@@ -31,6 +31,11 @@ _sandbox() {
       shift
       _sandbox_create $*
       ;;
+    # move to sandbox
+    cd)
+      shift
+      _sandbox_move $*
+      ;;
     # show sandboxes
     ls | list)
       shift
@@ -58,6 +63,24 @@ _sandbox_create() {
   $mkdir -p "${sandbox_dir}/${sandbox_name}" 2>/dev/null
 
   $printf -- '%s\n' "${sandbox_dir}/${sandbox_name}"
+}
+
+_sandbox_move() {
+  # local cd=$(type -tP cd)
+  local printf=$(type -tP printf)
+
+  local sandbox_dir=${_SANDBOX_DIR:-$HOME/.sandbox}
+  local target_dir="$sandbox_dir/$1"
+
+  if [ x"$1" = "x" ]
+  then
+    $printf -- 'sandbox name required\n' >&2 && return 65
+  elif [ ! -d "$target_dir" ]
+  then
+    $printf -- '%s is not found\n' "$1" >&2 && return 66
+  fi
+
+  cd "$target_dir"
 }
 
 _sandbox_list() {
@@ -112,6 +135,7 @@ _sandbox_usage() {
 	Commands:
 	
 	  c  | create  create sandbox directory
+	  cd           move to sandbox directory
 	  ls | list    show sandbox directories
 	  rm | remove  remove sandbox directory
 	USAGE
